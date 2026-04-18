@@ -1,0 +1,97 @@
+[
+  {
+    "paper_id": "1811.11365",
+    "question": "Why is this work different from text-only UNMT?",
+    "answer": "the image can play the role of a pivot \u201clanguage\" to bridge the two languages without paralleled corpus",
+    "evidence": [
+      "Our idea is originally inspired by the text-only unsupervised MT (UMT) BIBREF8 , BIBREF9 , BIBREF0 , investigating whether it is possible to train a general MT system without any form of supervision. As BIBREF0 discussed, the text-only UMT is fundamentally an ill-posed problem, since there are potentially many ways to associate target with source sentences. Intuitively, since the visual content and language are closely related, the image can play the role of a pivot \u201clanguage\" to bridge the two languages without paralleled corpus, making the problem \u201cmore well-defined\" by reducing the problem to supervised learning. However, unlike the text translation involving word generation (usually a discrete distribution), the task to generate a dense image from a sentence description itself is a challenging problem BIBREF10 . High quality image generation usually depends on a complicated or large scale neural network architecture BIBREF11 , BIBREF12 , BIBREF13 . Thus, it is not recommended to utilize the image dataset as a pivot \u201clanguage\" BIBREF14 . Motivated by the cycle-consistency BIBREF15 , we tackle the unsupervised translation with a multi-modal framework which includes two sequence-to-sequence encoder-decoder models and one shared image feature extractor. We don't introduce the adversarial learning via a discriminator because of the non-differentiable $\\arg \\max $ operation during word generation. With five modules in our framework, there are multiple data streaming paths in the computation graph, inducing the auto-encoding loss and cycle-consistency loss, in order to achieve the unsupervised translation."
+    ],
+    "answer_type": "extractive"
+  },
+  {
+    "paper_id": "1907.06458",
+    "question": "How are graphs derived from a given text?",
+    "answer": "The given corpus is traversed, and for each element INLINEFORM6 , its successor INLINEFORM7 , together with a given element, forms a directed edge INLINEFORM8 . Finally, such edges are weighted according to the number of times they appear in a given corpus. Thus the graph, constructed after traversing a given corpus, consists of all local neighborhoods (order one), merged into a single joint structure. Global contextual information is potentially kept intact (via weights), even though it needs to be detected via network analysis",
+    "evidence": [
+      "In this work we consider directed graphs. Let INLINEFORM0 represent a graph comprised of a set of vertices INLINEFORM1 and a set of edges ( INLINEFORM2 ), which are ordered pairs. Further, each edge can have a real-valued weight assigned. Let INLINEFORM3 represent a document comprised of tokens INLINEFORM4 . The order in which tokens in text appear is known, thus INLINEFORM5 is a totally ordered set. A potential way of constructing a graph from a document is by simply observing word co-occurrences. When two words co-occur, they are used as an edge. However, such approaches do not take into account the sequence nature of the words, meaning that the order is lost. We attempt to take this aspect into account as follows. The given corpus is traversed, and for each element INLINEFORM6 , its successor INLINEFORM7 , together with a given element, forms a directed edge INLINEFORM8 . Finally, such edges are weighted according to the number of times they appear in a given corpus. Thus the graph, constructed after traversing a given corpus, consists of all local neighborhoods (order one), merged into a single joint structure. Global contextual information is potentially kept intact (via weights), even though it needs to be detected via network analysis as proposed next."
+    ],
+    "answer_type": "extractive"
+  },
+  {
+    "paper_id": "1805.04033",
+    "question": "What human evaluation method is proposed?",
+    "answer": "comparing the summary with the text instead of the reference and labeling the candidate bad if it is incorrect or irrelevant",
+    "evidence": [
+      "More detailed explanation is introduced in Section SECREF2 . Another problem for abstractive text summarization is that the system summary cannot be easily evaluated automatically. ROUGE BIBREF9 is widely used for summarization evaluation. However, as ROUGE is designed for extractive text summarization, it cannot deal with summary paraphrasing in abstractive text summarization. Besides, as ROUGE is based on the reference, it requires high-quality reference summary for a reasonable evaluation, which is also lacking in the existing dataset for Chinese social media text summarization. We argue that for proper evaluation of text generation task, human evaluation cannot be avoided. We propose a simple and practical human evaluation for evaluating text summarization, where the summary is evaluated against the source content instead of the reference. It handles both of the problems of paraphrasing and lack of high-quality reference. The contributions of this work are summarized as follows:",
+      "For text summarization, a common automatic evaluation method is ROUGE BIBREF9 . The generated summary is evaluated against the reference summary, based on unigram recall (ROUGE-1), bigram recall (ROUGE-2), and recall of longest common subsequence (ROUGE-L). To facilitate comparison with the existing systems, we adopt ROUGE as the automatic evaluation method. The ROUGE is calculated on the character level, following the previous work BIBREF1 . However, for abstractive text summarization, the ROUGE is sub-optimal, and cannot assess the semantic consistency between the summary and the source content, especially when there is only one reference for a piece of text. The reason is that the same content may be expressed in different ways with different focuses. Simple word match cannot recognize the paraphrasing. It is the case for all of the existing large-scale datasets. Besides, as aforementioned, ROUGE is calculated on the character level in Chinese text summarization, making the metrics favor the models on the character level in practice. In Chinese, a word is the smallest semantic element that can be uttered in isolation, not a character. In the extreme case, the generated text could be completely intelligible, but the characters could still match. In theory, calculating ROUGE metrics on the word level could alleviate the problem. However, word segmentation is also a non-trivial task for Chinese. There are many kinds of segmentation rules, which will produce different ROUGE scores. We argue that it is not acceptable to introduce additional systematic bias in automatic evaluations, and automatic evaluation for semantically related tasks can only serve as a reference. To avoid the deficiencies, we propose a simple human evaluation method to assess the semantic consistency. Each summary candidate is evaluated against the text rather than the reference. If the candidate is irrelevant or incorrect to the text, or the candidate is not understandable, the candidate is labeled bad. Otherwise, the candidate is labeled good. Then, we can get an accuracy of the good summaries. The proposed evaluation is very simple and straight-forward. It focuses on the relevance between the summary and the text. The semantic consistency should be the major consideration when putting the text summarization methods into practice, but the current automatic methods cannot judge properly. For detailed guidelines in human evaluation, please refer to Appendix SECREF6 . In the human evaluation, the text-summary pairs are dispatched to two human annotators who are native speakers of Chinese. As in our setting the summary is evaluated against the reference, the number of the pairs needs to be manually evaluated is four times the number of the pairs in the test set, because we need to compare four systems in total. To decrease the workload and get a hint about the annotation quality at the same time, we adopt the following procedure. We first randomly select 100 pairs in the validation set for the two human annotators to evaluate. Each pair is annotated twice, and the inter-annotator agreement is checked. We find that under the protocol, the inter-annotator agreement is quite high. In the evaluation of the test set, a pair is only annotated once to accelerate evaluation. To further maintain consistency, summaries of the same source content will not be distributed to different annotators."
+    ],
+    "answer_type": "abstractive"
+  },
+  {
+    "paper_id": "1912.02481",
+    "question": "What turn out to be more important high volume or high quality data?",
+    "answer": "only high-quality data helps",
+    "evidence": [
+      "The Spearman $\\rho $ correlation for fastText models on the curated small dataset (clean), C1, improves the baselines by a large margin ($\\rho =0.354$ for Twi and 0.322 for Yor\u00f9b\u00e1) even with a small dataset. The improvement could be justified just by the larger vocabulary in Twi, but in the case of Yor\u00f9b\u00e1 the enhancement is there with almost half of the vocabulary size. We found out that adding some noisy texts (C2 dataset) slightly improves the correlation for Twi language but not for the Yor\u00f9b\u00e1 language. The Twi language benefits from Wikipedia articles because its inclusion doubles the vocabulary and reduces the bias of the model towards religious texts. However, for Yor\u00f9b\u00e1, noisy texts often ignore diacritics or tonal marks which increases the vocabulary size at the cost of an increment in the ambiguity too. As a result, the correlation is slightly hurt. One would expect that training with more data would improve the quality of the embeddings, but we found out with the results obtained with the C3 dataset, that only high-quality data helps. The addition of JW300 boosts the vocabulary in both cases, but whereas for Twi the corpus mixes dialects and is noisy, for Yor\u00f9b\u00e1 it is very clean and with full diacritics. Consequently, the best embeddings for Yor\u00f9b\u00e1 are obtained when training with the C3 dataset, whereas for Twi, C2 is the best option. In both cases, the curated embeddings improve the correlation with human judgements on the similarity task a $\\Delta \\rho =+0.25$ or, equivalently, by an increment on $\\rho $ of 170% (Twi) and 180% (Yor\u00f9b\u00e1)."
+    ],
+    "answer_type": "extractive"
+  },
+  {
+    "paper_id": "1905.11037",
+    "question": "Do they literally just treat this as \"predict the next spell that appears in the text\"?",
+    "answer": "Yes",
+    "evidence": [
+      "This paper explores instead a new task: action prediction from natural language descriptions of scenes. The challenge is addressed as follows: given a natural language input sequence describing the scene, such as a piece of a story coming from a transcript, the goal is to infer which action is most likely to happen next."
+    ],
+    "answer_type": "yes_no"
+  },
+  {
+    "paper_id": "1710.09589",
+    "question": "is the dataset balanced across the four languages?",
+    "answer": "No",
+    "evidence": [
+      "The data stems from a joint ADAPT-Microsoft project. An overview of the provided dataset is given in Table TABREF16 . Notice that the available amount of data differs per language."
+    ],
+    "answer_type": "yes_no"
+  },
+  {
+    "paper_id": "1905.01962",
+    "question": "How are the two different models trained?",
+    "answer": "They pre-train the models using 600000 articles as an unsupervised dataset and then fine-tune the models on small training set.",
+    "evidence": [
+      "We use the additional INLINEFORM0 training articles labeled by publisher as an unsupervised data set to further train the BERT model.",
+      "We first investigate the impact of pre-training on BERT-BASE's performance. We then compare the performance of BERT-BASE with BERT-LARGE. For both, we vary the number of word-pieces from each article that are used in training. We perform tests with 100, 250 and 500 word pieces.",
+      "Next, we further explore the impact of sequence length using BERT-LARGE. The model took approximately 3 days to pre-train when using 4 NVIDIA GeForce GTX 1080 Ti. On the same computer, fine tuning the model on the small training set took only about 35 minutes for sequence length 100. The model's training time scaled roughly linearly with sequence length. We did a grid search on sequence length and learning rate."
+    ],
+    "answer_type": "abstractive"
+  },
+  {
+    "paper_id": "1908.10422",
+    "question": "How many agents do they ensemble over?",
+    "answer": "100",
+    "evidence": [
+      "Ensemble, which selects a sentence using 100 agents trained on clustered dialogues as described in section SECREF4 \u2013 the agent in focus is chosen using a regressor as predictor of dialogue reward INLINEFORM0 using a similar neural net as the ChatDQN agents except for the final layer having one node and using Batch Normalisation BIBREF44 between hidden layers as in BIBREF36 ;"
+    ],
+    "answer_type": "extractive"
+  },
+  {
+    "paper_id": "1708.05873",
+    "question": "How are the main international development topics that states raise identified?",
+    "answer": "They focus on exclusivity and semantic coherence measures: Highly frequent words in a given topic that do not appear very often in other topics are viewed as making that topic exclusive. They select select the 16-topic model, which has the largest positive residual in the regression fit, and provides higher exclusivity at the same level of semantic coherence.",
+    "evidence": [
+      "We assess the optimal number of topics that need to be specified for the STM analysis. We follow the recommendations of the original STM paper and focus on exclusivity and semantic coherence measures. BIBREF5 propose semantic coherence measure, which is closely related to point-wise mutual information measure posited by BIBREF6 to evaluate topic quality. BIBREF5 show that semantic coherence corresponds to expert judgments and more general human judgments in Amazon's Mechanical Turk experiments.",
+      "Exclusivity scores for each topic follows BIBREF7 . Highly frequent words in a given topic that do not appear very often in other topics are viewed as making that topic exclusive. Cohesive and exclusive topics are more semantically useful. Following BIBREF8 we generate a set of candidate models ranging between 3 and 50 topics. We then plot the exclusivity and semantic coherence (numbers closer to 0 indicate higher coherence), with a linear regression overlaid (Figure FIGREF3 ). Models above the regression line have a \u201cbetter\u201d exclusivity-semantic coherence trade off. We select the 16-topic model, which has the largest positive residual in the regression fit, and provides higher exclusivity at the same level of semantic coherence. The topic quality is usually evaluated by highest probability words, which is presented in Figure FIGREF4 ."
+    ],
+    "answer_type": "abstractive"
+  },
+  {
+    "paper_id": "1906.01183",
+    "question": "Which languages do they work with?",
+    "answer": "German Spanish Chinese",
+    "evidence": [
+      "We use experiments to evaluate the effectiveness of our proposed method on NER task. On three different low-resource languages, we conducted an experimental evaluation to prove the effectiveness of our back attention mechanism on the NER task. Four datasets are used in our work, including CoNLL 2003 German BIBREF9 , CoNLL 2002 Spanish BIBREF10 , OntoNotes 4 BIBREF11 and Weibo NER BIBREF12 . All the annotations are mapped to the BIOES format. Table TABREF14 shows the detailed statistics of the datasets.",
+      "Table TABREF22 shows the results on Chinese OntoNotes 4.0. Adding BAN to baseline model leads to an increase from 63.25% to 72.15% F1-score. In order to further improve the performance, we use the BERT model BIBREF20 to produce word embeddings. With no segmentation, we surpass the previous state-of-the-art approach by 6.33% F1-score. For Weibo dataset, the experiment results are shown in Table TABREF23 , where NE, NM and Overall denote named entities, nominal entities and both. The baseline model gives a 33.18% F1-score. Using the transfer knowledge by BAN, the baseline model achieves an immense improvement in F1-score, rising by 10.39%. We find that BAN still gets consistent improvement on a strong model. With BAN, the F1-score of BERT+BiLSTM+CRF increases to 70.76%."
+    ],
+    "answer_type": "extractive"
+  }
+]
