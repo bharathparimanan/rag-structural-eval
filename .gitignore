@@ -28,6 +28,7 @@ ENV/
 # ── Jupyter ────────────────────────────────────────────────────────────────────
 .ipynb_checkpoints/
 */.ipynb_checkpoints/
+*/.ipynb_checkpoints*/
 
 # ── Pipeline: Raw data (regenerate with pipeline/ingest/download.py) ──────────
 pipeline/raw/*
