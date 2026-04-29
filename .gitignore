@@ -21,6 +21,9 @@ lib64/
 .venv/
 venv/
 env/
+ENV/
+.env
+.env.*
 
 # ── Jupyter ────────────────────────────────────────────────────────────────────
 .ipynb_checkpoints/
