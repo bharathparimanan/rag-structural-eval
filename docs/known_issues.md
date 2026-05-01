@@ -1,14 +1,14 @@
 # Known Issues Log
 
-## Graph-Constrained Vector Retrieval — MSc Dissertation 7PAM2002
+## Graph-Constrained Vector Retrieval - MSc Dissertation 7PAM2002
 
 A chronological record of technical issues encountered throughout the project, how each was diagnosed, and how it was resolved or mitigated. Maintained as a transparency record for reproducibility.
 
 ---
 
-## Issue 1 — QASPER Dataset Loading Failure
+## Issue 1 - QASPER Dataset Loading Failure
 
-**When:** Early development — dataset loading stage  
+**When:** Early development - dataset loading stage  
 **Severity:** Blocking  
 **Status:** Resolved
 
@@ -32,7 +32,7 @@ No impact on results. Required one-line fix applied to all notebooks.
 
 ---
 
-## Issue 2 — DATA_DIR Path Resolution Failure
+## Issue 2 - DATA_DIR Path Resolution Failure
 
 **When:** Full evaluation notebook development  
 **Severity:** Blocking  
@@ -61,14 +61,14 @@ No impact on results. Path detection added to Cell 8 of `full_evaluation_groq.ip
 
 ---
 
-## Issue 3 — queries.json Had Only 10 Queries
+## Issue 3 - queries.json Had Only 10 Queries
 
 **When:** Full evaluation run setup  
 **Severity:** Blocking  
 **Status:** Resolved
 
 ### What Happened
-When the full evaluation notebook tried to load `queries.json`, it found only 10 queries — the pilot sample built during V0 notebook development. The full evaluation requires 50.
+When the full evaluation notebook tried to load `queries.json`, it found only 10 queries - the pilot sample built during V0 notebook development. The full evaluation requires 50.
 
 ### Root Cause
 The pilot notebooks built `queries.json` with `N_PILOT = 10`. This file was never regenerated for the full evaluation.
@@ -81,17 +81,17 @@ No impact on results. Query regeneration cell runs before artefact loading.
 
 ---
 
-## Issue 4 — Groq API Rate Limit Failures at Query 100
+## Issue 4 - Groq API Rate Limit Failures at Query 100
 
 **When:** V0 full evaluation run (first attempt)  
-**Severity:** High — caused query failures  
+**Severity:** High - caused query failures  
 **Status:** Resolved
 
 ### What Happened
 During the V0 evaluation run, consistent rate limit errors (HTTP 429) began occurring at approximately query 100. The initial `SLEEP_BETWEEN_CALLS = 2` seconds was insufficient.
 
 ### Root Cause
-Each query makes approximately 5 Groq API calls total — 1 for generation and 4 for RAGAS metric scoring. At 2 seconds per call, this equals ~10 calls per minute, which was fine early in the run but triggered rate limiting as the session accumulated requests.
+Each query makes approximately 5 Groq API calls total - 1 for generation and 4 for RAGAS metric scoring. At 2 seconds per call, this equals ~10 calls per minute, which was fine early in the run but triggered rate limiting as the session accumulated requests.
 
 ### Fix
 `SLEEP_BETWEEN_CALLS` increased from 2 seconds to 12 seconds in Cell 8 of `full_evaluation_groq.ipynb`. This distributes calls to approximately 5 per minute, safely under the 30 request/minute free tier limit.
@@ -105,10 +105,10 @@ Queries that failed due to rate limiting were marked as `status: failed` in the 
 
 ---
 
-## Issue 5 — Hardcoded API Key Committed to GitHub
+## Issue 5 - Hardcoded API Key Committed to GitHub
 
 **When:** GitHub push during notebook development  
-**Severity:** Critical — security risk  
+**Severity:** Critical - security risk  
 **Status:** Resolved
 
 ### What Happened
@@ -119,7 +119,7 @@ During debugging, the API key was temporarily hardcoded to test the Groq connect
 
 ### Resolution Steps
 1. Rotated the exposed key immediately at console.groq.com
-2. Attempted `git rebase -i` to remove the commit — encountered rebase-merge directory conflict
+2. Attempted `git rebase -i` to remove the commit - encountered rebase-merge directory conflict
 3. Used GitHub's secret scanning unblock URL to allow the push after confirming the key was already rotated
 4. Replaced hardcoded key with `python-dotenv` pattern in all subsequent notebook versions
 
@@ -136,10 +136,10 @@ No security risk after key rotation. The exposed key was deleted before any unau
 
 ---
 
-## Issue 6 — RAGAS LLM-Dependent Metrics Returning 0.0
+## Issue 6 - RAGAS LLM-Dependent Metrics Returning 0.0
 
-**When:** Full evaluation run — all three variants  
-**Severity:** Critical — invalidated all LLM-dependent metric results  
+**When:** Full evaluation run - all three variants  
+**Severity:** Critical - invalidated all LLM-dependent metric results  
 **Status:** Identified, fix applied, re-run required
 
 ### What Happened
@@ -149,10 +149,10 @@ Context Recall, Context Precision, Faithfulness, and Answer Relevancy all return
 A RAGAS API version incompatibility. The `EvaluationResult` object returned by the updated RAGAS framework no longer supports `.get()` for score extraction. The original `safe_score()` function was calling `result.get("context_recall")` which raised an `AttributeError` silently caught by the except block, returning 0.0 for every metric.
 
 ```python
-# Broken — raises AttributeError in updated RAGAS
+# Broken - raises AttributeError in updated RAGAS
 val = result_dict.get(key)
 
-# Fixed — correct API for updated RAGAS
+# Fixed - correct API for updated RAGAS
 df = result.to_pandas()
 val = df[col].iloc[0]
 ```
@@ -183,10 +183,10 @@ Documented honestly in Section 5.1 and Section 6.4 of the Final Project Report. 
 
 ---
 
-## Issue 7 — Llama 3.2 3B JSON Parse Failures in Pilot
+## Issue 7 - Llama 3.2 3B JSON Parse Failures in Pilot
 
 **When:** Pilot evaluation (10-query run using Ollama)  
-**Severity:** Medium — affected V1 and V2 metric reliability  
+**Severity:** Medium - affected V1 and V2 metric reliability  
 **Status:** Resolved by model upgrade
 
 ### What Happened
@@ -199,14 +199,14 @@ Llama 3.2 3B is too small to reliably follow RAGAS's structured JSON output inst
 Switched to Llama 3.1 8B via Groq API for the full evaluation. The larger model follows structured output instructions reliably. V0 pilot scores for Context Precision (0.270) and Faithfulness (0.083) are reported with caution as they came from a small number of queries where valid JSON was returned before the failure pattern became consistent.
 
 ### Impact
-V1 and V2 Context Precision and Faithfulness scores from the pilot are marked as unreliable (—) in Table 4 of the report. This is acknowledged as a limitation in Section 6.4.
+V1 and V2 Context Precision and Faithfulness scores from the pilot are marked as unreliable (-) in Table 4 of the report. This is acknowledged as a limitation in Section 6.4.
 
 ---
 
-## Issue 8 — Rebase-Merge Directory Conflict
+## Issue 8 - Rebase-Merge Directory Conflict
 
 **When:** Attempting to remove API key from Git history  
-**Severity:** Low — process blocker  
+**Severity:** Low - process blocker  
 **Status:** Resolved
 
 ### What Happened
